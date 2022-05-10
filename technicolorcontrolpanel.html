@@ -1,0 +1,716 @@
+<html>
+    <head>
+        <title>technicolor lab coat controller</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <script type="text/javascript">
+
+var xmlhttp;
+function loadXMLDoc(url,cfunc)
+{
+    if (window.XMLHttpRequest)
+          xmlhttp=new XMLHttpRequest();  // code for IE7+, Firefox, Chrome, Opera, Safari
+
+    xmlhttp.onreadystatechange=cfunc;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.send();
+}
+
+function command_chase()
+{
+    // loadXMLDoc("chase", function() {});
+    s.send("chase");
+}
+
+function command_soundactivated()
+{
+    // loadXMLDoc("soundactivated", function() {});
+    s.send("soundactivated");
+}
+
+function command_solid()
+{
+    // loadXMLDoc("solid", function() {});
+    s.send("solid");
+}
+
+function command_supachase()
+{
+    //loadXMLDoc("supachase", function() {});
+    s.send("supachase");
+}
+
+function command_megapulse()
+{
+    //loadXMLDoc("megapulse", function() {});
+    s.send("megapulse");
+}
+
+function command_colorscroll()
+{
+    //loadXMLDoc("colorscroll", function() {});
+    s.send("colorscroll");
+}
+
+function command_artnet()
+{
+    //loadXMLDoc("colorscroll", function() {});
+    s.send("artnet");
+}
+
+function command_megarainbow()
+{
+    //loadXMLDoc("megarainbow", function() {});
+    s.send("megarainbow");
+}
+
+function command_reversedirection()
+{
+    //loadXMLDoc("reversedirection", function() {});
+    s.send("reversedirection");
+}
+
+
+
+function command_reverseandpop()
+{
+    //loadXMLDoc("reversedirection", function() {});
+    s.send("reverseandpop");
+}
+
+
+function command_sensitivity(_value)
+{
+    //loadXMLDoc("sensitivity/" + _value.toString(), function() {});
+    s.send("sensitivity/" + _value.toString());
+}
+
+function command_brightness(_value)
+{
+   // loadXMLDoc("brightness/" + _value.toString(), function() {});
+    s.send("brightness/" + _value.toString());
+}
+
+function command_decay(_value)
+{
+    //loadXMLDoc("decay/" + _value.toString(), function() {});
+    s.send("decay/" + _value.toString());
+}
+
+function command_chasedelay(_value)
+{
+    //loadXMLDoc("chasedelay/" + _value.toString(), function() {});
+    s.send("chasedelay/" + _value.toString());
+}
+
+function command_color(_value)
+{
+    //loadXMLDoc("color/" + _value, function() {});
+    s.send("color/" + _value);
+}
+
+var s;
+
+function newWebsocket()
+{
+    console.log("new websocket");
+    //s = new WebSocket("ws://192.168.1.2:9876/ws");
+    s = new WebSocket("ws://" + document.getElementById("ipaddress").value + ":9876/ws");
+
+    s.onopen = function(e)
+    {
+        var status = document.getElementById("status")
+        if (status.classList.contains("status-notconnected"))
+            status.classList.replace("status-notconnected", "status-connected")
+        status.innerHTML = "Connected";
+        console.log("opened");
+    }
+    
+    s.onclose = function(e)
+    {
+        var status = document.getElementById("status")
+        if (status.classList.contains("status-connected"))
+            status.classList.replace("status-connected", "status-notconnected")
+        status.innerHTML = "Not Connected";
+        console.log("closed");
+    }
+    
+    s.onmessage = function(e)
+    {
+        console.log(e.data);
+    }
+}
+
+window.onload = function()
+{
+    newWebsocket();
+
+    document.getElementById("mode-chase").addEventListener( "touchstart", function()
+    {
+        s.send("chase");
+    });
+
+    document.getElementById("mode-sound-vu-hot").addEventListener( "touchstart", function()
+    {
+        s.send("soundactivated/vu-hot");
+    });
+
+    document.getElementById("mode-sound-vu-color").addEventListener( "touchstart", function()
+    {
+        s.send("soundactivated/vu-color");
+    });
+
+    document.getElementById("mode-sound-vu-colorswitch").addEventListener( "touchstart", function()
+    {
+        s.send("soundactivated/vu-colorswitch");
+    });
+
+    document.getElementById("mode-sound-colorswitch").addEventListener( "touchstart", function()
+    {
+        s.send("soundactivated/colorswitch");
+    });
+
+    document.getElementById("mode-sound-colorpulse").addEventListener( "touchstart", function()
+    {
+        s.send("soundactivated/colorpulse");
+    });
+
+    document.getElementById("mode-solid").addEventListener( "touchstart", function()
+    {
+        s.send("solid");
+    });
+
+    document.getElementById("mode-supachase").addEventListener( "touchstart", function()
+    {
+        s.send("supachase");
+    });
+
+    document.getElementById("mode-christmaschase").addEventListener( "touchstart", function()
+    {
+        s.send("christmaschase");
+    });
+
+    document.getElementById("mode-megapulse").addEventListener( "touchstart", function()
+    {
+        s.send("megapulse");
+    });
+
+    document.getElementById("mode-colorscroll").addEventListener( "touchstart", function()
+    {
+        s.send("colorscroll");
+    });
+
+    document.getElementById("mode-megarainbow").addEventListener( "touchstart", function()
+    {
+        s.send("megarainbow");
+    });
+
+    document.getElementById("mode-artnet").addEventListener( "touchstart", function()
+    {
+        s.send("artnet");
+    });
+
+    document.getElementById("mode-campfire").addEventListener( "touchstart", function()
+    {
+        s.send("campfire");
+    });
+
+    document.getElementById("mode-campfirecold").addEventListener( "touchstart", function()
+    {
+        s.send("campfirecold");
+    });
+
+    document.getElementById("mode-campfiregreen").addEventListener( "touchstart", function()
+    {
+        s.send("campfiregreen");
+    });
+
+    document.getElementById("reversedirection").addEventListener( "touchstart", function()
+    {
+        s.send("reversedirection");
+    });
+
+    document.getElementById("reverseandpop").addEventListener( "touchstart", function()
+    {
+        s.send("reverseandpop");
+    });
+
+    document.getElementById("crowdblinder").addEventListener( "touchstart", function()
+    {
+        s.send("crowdblinderon");
+    });
+
+    document.getElementById("crowdblinder").addEventListener( "touchend", function()
+    {
+        s.send("crowdblinderoff");
+    });
+
+    document.getElementById("blackout").addEventListener( "touchstart", function()
+    {
+        s.send("blackouton");
+    });
+
+    document.getElementById("blackout").addEventListener( "touchend", function()
+    {
+        s.send("blackoutoff");
+    });
+
+    document.getElementById("strobe8").addEventListener( "touchstart", function()
+    {
+        s.send("strobeon/0.1");
+    });
+
+    document.getElementById("strobe8").addEventListener( "touchend", function()
+    {
+        s.send("strobeoff");
+    });
+
+    document.getElementById("strobe4").addEventListener( "touchstart", function()
+    {
+        s.send("strobeon/0.03");
+    });
+
+    document.getElementById("strobe4").addEventListener( "touchend", function()
+    {
+        s.send("strobeoff");
+    });
+
+    document.getElementById("strobe2").addEventListener( "touchstart", function()
+    {
+        s.send("strobeon/0.0");
+    });
+
+    document.getElementById("strobe2").addEventListener( "touchend", function()
+    {
+        s.send("strobeoff");
+    });
+
+    document.getElementById("color-red").addEventListener( "touchstart", function()
+    {
+        s.send("color/red");
+    });
+
+    document.getElementById("color-orange").addEventListener( "touchstart", function()
+    {
+        s.send("color/orange");
+    });
+
+    document.getElementById("color-yellow").addEventListener( "touchstart", function()
+    {
+        s.send("color/yellow");
+    });
+
+    document.getElementById("color-green").addEventListener( "touchstart", function()
+    {
+        s.send("color/green");
+    });
+
+    document.getElementById("color-blue").addEventListener( "touchstart", function()
+    {
+        s.send("color/blue");
+    });
+
+    document.getElementById("color-purple").addEventListener( "touchstart", function()
+    {
+        s.send("color/purple");
+    });
+
+    document.getElementById("color-white").addEventListener( "touchstart", function()
+    {
+        s.send("color/white");
+    });
+
+    document.getElementById("color-superwhite").addEventListener( "touchstart", function()
+    {
+        s.send("color/superwhite");
+    });
+
+    document.getElementById("color-rgbwhite").addEventListener( "touchstart", function()
+    {
+        s.send("color/rgbwhite");
+    });
+
+    document.getElementById("color-black").addEventListener( "touchstart", function()
+    {
+        s.send("color/black");
+    });
+
+    document.getElementById("test-1").addEventListener( "touchstart", function()
+    {
+        s.send("test/1");
+    });
+    document.getElementById("test-2").addEventListener( "touchstart", function()
+    {
+        s.send("test/2");
+    });
+    document.getElementById("test-3").addEventListener( "touchstart", function()
+    {
+        s.send("test/3");
+    });
+    document.getElementById("test-4").addEventListener( "touchstart", function()
+    {
+        s.send("test/4");
+    });
+    document.getElementById("test-5").addEventListener( "touchstart", function()
+    {
+        s.send("test/5");
+    });
+    document.getElementById("test-6").addEventListener( "touchstart", function()
+    {
+        s.send("test/6");
+    });
+    document.getElementById("test-7").addEventListener( "touchstart", function()
+    {
+        s.send("test/7");
+    });
+    document.getElementById("test-8").addEventListener( "touchstart", function()
+    {
+        s.send("test/8");
+    });
+};
+
+
+
+
+
+        </script>
+        <style type="text/css">
+
+/*@import url('https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:300,700');*/
+
+@font-face {
+    font-family: "Nimbus Sans Medium";
+    src: url("NimbusSanNovDMed.ttf") format("truetype");
+}
+
+
+body
+{
+    -moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;
+    font-size: 2.5em;
+    background: radial-gradient(circle at 2.01% 71.94%, #1F1C2C, transparent 100%),radial-gradient(circle at 97.99% 47.96%, #928DAB, transparent 100%),radial-gradient(circle at 50% 50%, #686770, #686770 100%);
+    font-family: "Nimbus Sans Medium", sans-serif;
+    font-weight: 300;
+    touch-action: manipulation; /* to disable double-tap-to-zoom */
+}
+
+button
+{
+    border-style: none;
+    border-radius: 8px;
+    font-size: .8em;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    border-left: 1px solid rgba(0, 0, 0, 0.3);
+    font-weight: 300;
+}
+
+.modes
+{
+    width: 100%;
+    text-align: center;
+}
+
+.colors
+{
+    width: 100%;
+    text-align: center;
+}
+
+.sliders
+{
+    width: 100%;
+    text-align: center;
+}
+
+.modebutton
+{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    background: linear-gradient(to bottom, #eee 0%, #ddd 100%);
+    color: black;
+    box-shadow: 0 3px 0 #888;
+    padding: .2em;
+    margin-bottom: .4em;
+}
+
+.colorbutton
+{
+    width: 45%;
+    /*flex-grow: 1;*/
+    padding: .2em;
+    box-shadow: 0 3px 0 #111;
+}
+
+#status
+{
+    color: white;
+    font-size: .65em;
+}
+
+.header
+{
+    width: 100%;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    color: white;
+    background-color: black;
+}
+
+.headerplaceholder
+{
+    height: 80px;
+}
+
+label
+{
+    font-size: .7em;
+    display: block;
+}
+
+.slidergroup
+{
+    display: block;
+    background-color: #eee;
+    margin-bottom: .2em;
+}
+
+input[type=range]
+{
+    width: 80%;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.slider::-moz-slider-thumb
+{
+    width: 50px;
+    height: 50px;
+}
+
+.slider::-webkit-slider-thumb
+{
+    width: 50px;
+    height: 50px;
+}
+
+.status-connected
+{
+    background-color: green;
+}
+
+.status-notconnected
+{
+    background-color: red;
+
+    animation-name: emergencyPulse;
+    animation-duration: .5s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes emergencyPulse
+{
+    0%
+    {
+        background-color: red;
+    }
+    50%
+    {
+        background-color: white;
+    }
+    100%
+    {
+        background-color: red;
+    }
+}
+
+@media only screen and (max-device-width: 800px) and (orientation: portrait)
+{
+    .modebutton
+    {
+        margin-left: 5px !important;
+    }
+}
+/*
+@media only screen and (min-device-width: 600px)
+{
+    .modes
+    {
+        width: 48%;
+        display: flex;
+        flex-wrap: wrap;
+        border-radius: 10px;
+        position: absolute;
+        top: 100px;
+        left: 10px;
+    }
+
+    .modebutton
+    {
+        width: 45%;
+        flex-grow: 1;
+        margin: 3px;
+        font-size: 0.7em;
+        padding: 5px;
+    }
+
+    .section
+    {
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .colors
+    {
+        width: 48%;
+        position: absolute;
+        top: 100px;
+        right: 10px;
+    }
+
+    .colorbutton
+    {
+        font-size: .7em;
+        padding: 5px;
+    }
+
+    .sliders
+    {
+        width: 100%;
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+    }
+
+    input[type=range]
+    {
+        width: 80%;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .slidergroup
+    {
+        display: block;
+        background-color: #eee;
+        margin-bottom: .1em;
+        border-radius: 6px;
+    }
+
+    .slider
+    {
+        display: inline-block;
+    }
+
+    .slider::-moz-slider-thumb
+    {
+        width: 35px;
+        height: 35px;
+    }
+
+    .slider::-webkit-slider-thumb
+    {
+        width: 35px;
+        height: 35px;
+    }
+
+    .sliders-left, .sliders-right
+    {
+        width: 48%;
+        display: inline-block;
+    }
+}
+*/
+        </style>
+        <meta name="viewport" content="width=device-width, user-scalable=no" />
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+    </head>
+    <body>
+        <div class="header">
+            <div class="header-text">lab coat controller</div>
+            <button id="status" class="status-notconnected" onclick="newWebsocket()">Not Connected</div>
+        </div>
+        <div class="headerplaceholder"></div>
+        <div class="section">
+            <label for="ipaddress">IP address:</label>
+            <input type="text" id="ipaddress" value="10.0.0.89" />
+        </div>
+        <div class="section modes">
+            <button id="mode-chase" class="modebutton">Chase</button>
+            <button id="mode-sound-vu-hot" class="modebutton">Sound &ndash; VU (hot)</button>
+            <button id="mode-sound-vu-color" class="modebutton">Sound &ndash; VU (color)</button>
+            <button id="mode-sound-vu-colorswitch" class="modebutton">Sound &ndash; VU (color, switch)</button>
+            <button id="mode-sound-colorswitch" class="modebutton">Sound &ndash; Switch</button>
+            <button id="mode-sound-colorpulse" class="modebutton">Sound &ndash; Pulse</button>
+            <button id="mode-solid" class="modebutton">Solid Color</button>
+            <button id="mode-supachase" class="modebutton">Supachase</button>
+            <button id="mode-christmaschase" class="modebutton">Christmas chase</button>
+            <button id="mode-megapulse" class="modebutton">Megapulse</button>
+            <button id="mode-colorscroll" class="modebutton">Color Scroll</button>
+            <button id="mode-megarainbow" class="modebutton">Megarainbow</button>
+            <button id="mode-artnet" class="modebutton">Artnet</button>
+            <button id="mode-campfire" class="modebutton">Campfire</button>
+            <button id="mode-campfirecold" class="modebutton">Campfire Cold</button>
+            <button id="mode-campfiregreen" class="modebutton">Campfire Green</button>
+            <button id="reversedirection" class="modebutton">Reverse Direction</button>
+            <button id="reverseandpop" class="modebutton">Reverse &amp; Pop</button>
+            <button id="crowdblinder" class="modebutton">Crowd Blinder</button>
+            <button id="blackout" class="modebutton">Blackout</button>
+            <button id="strobe8" class="modebutton">Strobe 8</button>
+            <button id="strobe4" class="modebutton">Strobe 4</button>
+            <button id="strobe2" class="modebutton">Strobe 2</button>
+        </div>
+        <div class="section colors">
+            <button id="color-red" class="colorbutton" style="background-color: red">Red</button>
+            <button id="color-orange" class="colorbutton" style="background-color: orange">Orange</button>
+            <button id="color-yellow" class="colorbutton" style="background-color: yellow">Yellow</button>
+            <button id="color-green" class="colorbutton" style="background-color: green; color: white">Green</button>
+            <button id="color-blue" class="colorbutton" style="background-color: blue; color: white">Blue</button>
+            <button id="color-purple" class="colorbutton" style="background-color: purple; color: white">Purple</button>
+            <button id="color-white" class="colorbutton" style="background-color: white">White</button>
+            <button id="color-superwhite" class="colorbutton" style="background-color: white">Superwhite</button>
+            <button id="color-rgbwhite" class="colorbutton" style="background-color: white">RGB White</button>
+            <button id="color-black" class="colorbutton" style="background-color: black; color: white">Black</button>
+        </div>
+        <div class="section sliders">
+            <div class="sliders-left">
+                <div class="slidergroup">
+                    <label for="sensitivity">Sensitivity</label>
+                    <input class="slider" id="sensitivity" onchange="command_sensitivity(this.value)" type="range" min="1" max="200" value="63">
+                </div>
+                <div class="slidergroup">
+                    <label for="brightness">Brightness</label>
+                    <input class="slider" id="brightness" onchange="command_brightness(this.value)" type="range" min="0" max="3" value="0">
+                </div>
+            </div>
+            <div class="sliders-right">
+                <div class="slidergroup">
+                    <label for="decay">Decay</label>
+                    <input class="slider" id="decay" onchange="command_decay(this.value)" type="range" min="0" max="30" value="5">
+                </div>
+                <div class="slidergroup">
+                    <label for="chasedelay">Chase Delay</label>
+                    <input class="slider" id="chasedelay" onchange="command_chasedelay(this.value)" type="range" min="0" max="30" value="0">
+                </div>
+            </div>
+        </div>
+        <div class="section modes">
+            <button id="test-1" class="modebutton">Test 1</button>
+            <button id="test-2" class="modebutton">Test 2</button>
+            <button id="test-3" class="modebutton">Test 3</button>
+            <button id="test-4" class="modebutton">Test 4</button>
+            <button id="test-5" class="modebutton">Test 5</button>
+            <button id="test-6" class="modebutton">Test 6</button>
+            <button id="test-7" class="modebutton">Test 7</button>
+            <button id="test-8" class="modebutton">Test 8</button>
+        </div>
+    </body>
+<html>
